@@ -38,13 +38,20 @@ end
 
   describe '#touch_in' do
     it 'changes a cards status to in use' do
+      oystercard.top_up(10)
       oystercard.touch_in
       expect(oystercard).to be_in_journey
     end
+
+    it 'raises an error message if balance is less than £1' do
+      expect{ oystercard.touch_in }.to raise_error "You have insufficient funds"
+    end
+  
   end
 
   describe '#touch_out' do
     it 'changes a cards status to NOT in use' do
+      oystercard.top_up(10)
       oystercard.touch_in
       oystercard.touch_out
       expect(oystercard.in_journey?).to eq(false)
