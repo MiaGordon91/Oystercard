@@ -39,7 +39,15 @@ end
   describe '#touch_in' do
     it 'changes a cards status to in use' do
       oystercard.touch_in
-      expect(oystercard.in_journey?).to eq(true)
+      expect(oystercard).to be_in_journey
+    end
+  end
+
+  describe '#touch_out' do
+    it 'changes a cards status to NOT in use' do
+      oystercard.touch_in
+      oystercard.touch_out
+      expect(oystercard.in_journey?).to eq(false)
     end
   end
 
