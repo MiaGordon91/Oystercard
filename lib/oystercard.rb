@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :balance , :entry_station, :journeys
+  attr_reader :balance, :journeys
 
   DEFAULT_VALUE = 0
   MAXIMUM_LIMIT = 90
