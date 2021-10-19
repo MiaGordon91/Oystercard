@@ -65,6 +65,13 @@ end
       expect { oystercard.touch_out }.to change { oystercard.balance }.by -1
     end
 
+    it 'Makes the card forget entry station' do
+      oystercard.top_up(10)
+      oystercard.touch_in(station.name)
+      oystercard.touch_out 
+      expect(oystercard.entry_station).to eq(nil)
+    end 
+
   end
 
 end
