@@ -30,6 +30,12 @@ end
     end 
   end 
 
+  describe '#in_journey?' do
+    it 'returns false, if a card is not in use' do
+      expect(oystercard.in_journey?).to eq(false)
+    end
+  end
+
 end
 
 
