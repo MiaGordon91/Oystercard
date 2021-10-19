@@ -3,7 +3,8 @@ require 'oystercard'
 describe Oystercard do
 
   subject(:oystercard) { described_class.new }
-  let (:station) { double(name: :Kings_Cross) }
+  let (:entry_station) { double(name: :Kings_Cross) }
+  let (:exit_station) { double(name: :Holborn) }
 
   it 'checks balance has default value of 0' do
     expect(oystercard.balance).to eq Oystercard::DEFAULT_VALUE
@@ -38,17 +39,17 @@ end
     
     it 'changes a cards status to in use' do
       oystercard.top_up(10)
-      oystercard.touch_in(station.name)
+      oystercard.touch_in(entry_station.name)
       expect(oystercard).to be_in_journey
     end
 
     it 'raises an error message if balance is less than £1' do
-      expect{ oystercard.touch_in(station.name) }.to raise_error "You have insufficient funds"
+      expect{ oystercard.touch_in(entry_station.name) }.to raise_error "You have insufficient funds"
     end
 
     it 'saves the entry station on touch in' do
       oystercard.top_up(10)
-      oystercard.touch_in(station.name)
+      oystercard.touch_in(entry_station.name)
       expect(oystercard.entry_station).to eq(:Kings_Cross)
     end 
   
@@ -58,23 +59,35 @@ end
 
     it 'changes a cards status to NOT in use' do
       oystercard.top_up(10)
-      oystercard.touch_in(station.name)
-      oystercard.touch_out
+      oystercard.touch_in(entry_station.name)
+      oystercard.touch_out(exit_station.name)
       expect(oystercard.in_journey?).to eq(false)
     end
 
     it 'deducts the minimum' do 
       oystercard.top_up(10)
-      oystercard.touch_in(station.name)
-      expect { oystercard.touch_out }.to change { oystercard.balance }.by -1
+      oystercard.touch_in(entry_station.name)
+      expect { oystercard.touch_out(exit_station.name) }.to change { oystercard.balance }.by -1
     end
 
     it 'Makes the card forget entry station' do
       oystercard.top_up(10)
-      oystercard.touch_in(station.name)
-      oystercard.touch_out 
+      oystercard.touch_in(entry_station.name)
+      oystercard.touch_out (exit_station.name)
       expect(oystercard.entry_station).to eq(nil)
     end 
+
+  end
+
+  describe 'journey' do
+    
+    it 'is created, by touching in and out' do
+      oystercard.top_up(10) 
+      oystercard.touch_in(entry_station.name)
+      oystercard.touch_out(exit_station.name)
+      expected = [ {entry: :Kings_Cross, exit: :Holborn} ]
+      expect(oystercard.journeys).to eq expected
+    end
 
   end
 
