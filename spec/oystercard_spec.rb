@@ -9,6 +9,10 @@ describe Oystercard do
     expect(oystercard.balance).to eq Oystercard::DEFAULT_VALUE
   end 
 
+  it 'has an empty list of journeys by default' do
+    expect(oystercard.journeys).to eq [] 
+  end
+
   describe '#top_up' do 
 
   it { is_expected.to respond_to(:top_up).with(1).argument }

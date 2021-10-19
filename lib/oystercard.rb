@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :balance , :entry_station
+  attr_reader :balance , :entry_station, :journeys
 
   DEFAULT_VALUE = 0
   MAXIMUM_LIMIT = 90
@@ -8,6 +8,7 @@ class Oystercard
 
   def initialize(balance = DEFAULT_VALUE)
     @balance = balance
+    @journeys = []
   end 
 
   def top_up(credit)
