@@ -23,13 +23,6 @@ describe Oystercard do
   end 
 end
 
-  describe '#deduct' do 
-    it 'deduct method reduces balance by specified amount' do
-      oystercard.top_up(50)
-      expect(oystercard.deduct(10)).to eq(40)
-    end 
-  end 
-
   describe '#in_journey?' do
     it 'returns false, if a card is not in use' do
       expect(oystercard.in_journey?).to eq(false)
@@ -50,12 +43,20 @@ end
   end
 
   describe '#touch_out' do
+
     it 'changes a cards status to NOT in use' do
       oystercard.top_up(10)
       oystercard.touch_in
       oystercard.touch_out
       expect(oystercard.in_journey?).to eq(false)
     end
+
+    it 'deducts the minimum' do 
+      oystercard.top_up(10)
+      oystercard.touch_in
+      expect { oystercard.touch_out }.to change { oystercard.balance }.by -1
+    end
+
   end
 
 end
