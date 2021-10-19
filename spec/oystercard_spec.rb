@@ -50,7 +50,7 @@ end
     it 'saves the entry station on touch in' do
       oystercard.top_up(10)
       oystercard.touch_in(entry_station.name)
-      expect(oystercard.entry_station).to eq(:Kings_Cross)
+      expect(oystercard.last_entry).to eq(:Kings_Cross)
     end 
   
   end
