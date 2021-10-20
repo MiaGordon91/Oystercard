@@ -1,3 +1,5 @@
+require '../../lib/oystercard'
+
 describe 'user testing' do
 
 # In order to use public transport
