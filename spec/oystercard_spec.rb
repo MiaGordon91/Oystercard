@@ -39,7 +39,9 @@ end
     
     it 'changes a cards status to in use' do
       oystercard.top_up(10)
-      oystercard.touch_in(entry_station.name)
+      # oystercard.touch_in(entry_station.name)
+       oystercard.touch_in(entry_station)
+
       expect(oystercard).to be_in_journey
     end
 
@@ -59,8 +61,10 @@ end
 
     it 'changes a cards status to NOT in use' do
       oystercard.top_up(10)
-      oystercard.touch_in(entry_station.name)
-      oystercard.touch_out(exit_station.name)
+      # oystercard.touch_in(entry_station.name)
+      # oystercard.touch_out(exit_station.name)
+      oystercard.touch_in(entry_station)
+      oystercard.touch_out(exit_station)
       expect(oystercard.in_journey?).to eq(false)
     end
 

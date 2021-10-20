@@ -1,8 +1,8 @@
 class Station
 
-  attr_reader :name , :zone
+  attr_accessor :name , :zone
   
-  DEFAULT_STATION = 'Waterloo'
+  DEFAULT_STATION = nil
   DEFAULT_ZONE = 1
 
   def initialize
